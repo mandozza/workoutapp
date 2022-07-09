@@ -29,6 +29,22 @@ const getWorkout = async (req, res) => {
 const createWorkout = async (req, res) => {
   const { title, reps, load } = req.body;
 
+  let emptyFields = []
+  if (!title) {
+    emptyFields.push('title')
+  }
+  if (!reps) {
+    emptyFields.push('reps')
+  }
+  if (!load) {
+    emptyFields.push('load')
+  }
+
+  if (emptyFields.length > 0) {
+    console.log('here is empyty fields', emptyFields)
+    return res.status(400).json({ error: 'Please fill in all fields', emptyFields });
+  }
+
   try {
       const workout = await Workout.create({ title, reps, load });
       // if good, send back the new workout.
@@ -49,6 +65,7 @@ const deleteWorkout = async (req, res) => {
 
   // attempt delete.
   const workout = await Workout.findByIdAndDelete({_id: id});
+  console.log('payload afer delete', workout);
   if (!workout) {
     return res.status(400).json({ error: 'No such workout' });
   }
