@@ -3,7 +3,7 @@
 
 A small MERN app to track workouts.
 
-
+![Screenshot](screenshot.png)
 
 ## Tech Stack
 
